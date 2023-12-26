@@ -1,56 +1,77 @@
 let options = ['Rock', 'Paper', 'Scissors'];
 
+pScore = 0;
+cScore = 0;
+
+
+
 function getComputerChoice() {
     let randomIndex = Math.floor(Math.random() * options.length);
     return options[randomIndex];
 }
 
+
 function playRound(playerSelection, computerSelection) {
-    // Make playerSelection case-insensitive
-    playerSelection = playerSelection.toLowerCase();
+
 
     // Check for a tie
-    if (playerSelection === computerSelection.toLowerCase()) {
-        return 'It\'s a tie!';
+    if (playerSelection === computerSelection) {
+        // pScore += 0;
+        // cScore += 0;
 
     } else {
-        // Check for player win conditions
-        if (
-            (playerSelection === 'rock' && computerSelection.toLowerCase() === 'scissors') ||
-            (playerSelection === 'paper' && computerSelection.toLowerCase() === 'rock') ||
-            (playerSelection === 'scissors' && computerSelection.toLowerCase() === 'paper')
-        ) {
-            return `You Win! ${playerSelection} beats ${computerSelection}.`;
 
+        if (
+            (playerSelection === 'Rock' && computerSelection === 'Scissors') ||
+            (playerSelection === 'Paper' && computerSelection === 'Rock') ||
+            (playerSelection === 'Scissors' && computerSelection === 'Paper')
+        ) {
+            pScore += 1;
         } else {
             // If not a tie and not a player win, it's a computer win
-            return `You Lose! ${computerSelection} beats ${playerSelection}.`;
+            cScore += 1;
+        }
+    }
+
+
+    let pDisplay = document.querySelector('#pDisplay');
+    let cDisplay = document.querySelector('#cDisplay');
+
+
+    pDisplay.innerHTML = `Player Score: ${pScore} ( ${playerSelection})`;
+    cDisplay.innerHTML = `Comp Score: ${cScore} (${computerSelection})`;
+
+
+    if (pScore === 5 || cScore === 5) {
+        let display = document.querySelector('#Display');
+        if (pScore === 5) {
+            display.innerHTML = 'You Win!';
+        } else if (cScore === 5) {
+            display.innerHTML = 'You Lose!';
         }
     }
 }
 
 
+let btnDiv = document.querySelector('#btnContainer');
 
-function game() {
-    let playerScore = 0;
-    let compScore = 0;
-    for (let i = 1; i <= 5; i++) {
-        let computerSelection = getComputerChoice();
-        let playerSelection = prompt(`Round ${i}`);
-        let result = playRound(playerSelection, computerSelection);
-        console.log(result);
+let rockBtn = document.createElement('button');
+rockBtn.innerHTML = 'Rock';
 
-        if (result.includes('Win')) {
-            playerScore++;
-        } else if (result.includes('Lose')) {
-            compScore++
-        }
-    }
-    if (playerScore > compScore) {
-        console.log('You win the game!');
-    } else if (compScore > playerScore) {
-        console.log('You lose the game!')
-    }
-}
+let paperBtn = document.createElement('button');
+paperBtn.innerHTML = 'Paper';
 
-game();
+let scissorsBtn = document.createElement('button');
+scissorsBtn.innerHTML = 'Scissors';
+
+
+
+btnDiv.appendChild(rockBtn);
+btnDiv.appendChild(paperBtn);
+btnDiv.appendChild(scissorsBtn);
+
+rockBtn.addEventListener('click', () => playRound('Rock', getComputerChoice()));
+paperBtn.addEventListener('click', () => playRound('Paper', getComputerChoice()))
+scissorsBtn.addEventListener('click', () => playRound('Scissors', getComputerChoice()));
+
+
