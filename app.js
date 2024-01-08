@@ -1,77 +1,146 @@
-let options = ['Rock', 'Paper', 'Scissors'];
 
-pScore = 0;
-cScore = 0;
+// functions for operation
+
+function add(a, b) {
+    return a + b
+};
+
+function sub(a, b) {
+    return a - b
+};
+
+function mul(a, b) {
+    return a * b
+};
+
+function div(a, b) {
+    return a / b
+};
+
+// variables for operation
+
+let num1 = '';
+let num2 = '';
+let operator = '';
+
+// updating display with number and operator and 
+// storing them
+
+let display = document.querySelector('.display');
+let numButtons = document.querySelectorAll('.num');
+let operatorButtons = document.querySelectorAll('.operation');
 
 
+for (let numButton of numButtons) {
+    numButton.addEventListener('click', () => {
+        updateDisplay(numButton.textContent);
+    })
 
-function getComputerChoice() {
-    let randomIndex = Math.floor(Math.random() * options.length);
-    return options[randomIndex];
 }
 
+for (let operatorButton of operatorButtons) {
+    operatorButton.addEventListener('click', () => {
 
-function playRound(playerSelection, computerSelection) {
+        if (num1 && num2 && operator) {
 
+            operate();
+            updateOperator(operatorButton.textContent);
 
-    // Check for a tie
-    if (playerSelection === computerSelection) {
-        // pScore += 0;
-        // cScore += 0;
-
-    } else {
-
-        if (
-            (playerSelection === 'Rock' && computerSelection === 'Scissors') ||
-            (playerSelection === 'Paper' && computerSelection === 'Rock') ||
-            (playerSelection === 'Scissors' && computerSelection === 'Paper')
-        ) {
-            pScore += 1;
         } else {
-            // If not a tie and not a player win, it's a computer win
-            cScore += 1;
+            updateOperator(operatorButton.textContent);
         }
-    }
-
-
-    let pDisplay = document.querySelector('#pDisplay');
-    let cDisplay = document.querySelector('#cDisplay');
-
-
-    pDisplay.innerHTML = `Player Score: ${pScore} ( ${playerSelection})`;
-    cDisplay.innerHTML = `Comp Score: ${cScore} (${computerSelection})`;
-
-
-    if (pScore === 5 || cScore === 5) {
-        let display = document.querySelector('#Display');
-        if (pScore === 5) {
-            display.innerHTML = 'You Win!';
-        } else if (cScore === 5) {
-            display.innerHTML = 'You Lose!';
-        }
-    }
+    })
 }
 
 
-let btnDiv = document.querySelector('#btnContainer');
+// function for displaying and storing numbers 
 
-let rockBtn = document.createElement('button');
-rockBtn.innerHTML = 'Rock';
+function updateDisplay(value) {
 
-let paperBtn = document.createElement('button');
-paperBtn.innerHTML = 'Paper';
+    if (value === '.' && display.textContent.includes('.')) {
+        return;
+    }
 
-let scissorsBtn = document.createElement('button');
-scissorsBtn.innerHTML = 'Scissors';
+    if (!operator) {
+        num1 += value
+        display.textContent = num1;
+    } else {
+        num2 += value;
+        display.textContent = num2;
+    }
+
+}
+// function for displaying and storing operator
+
+function updateOperator(value) {
+
+    operator = value;
+    display.textContent = num1 + ' ' + operator
 
 
+}
 
-btnDiv.appendChild(rockBtn);
-btnDiv.appendChild(paperBtn);
-btnDiv.appendChild(scissorsBtn);
+// running the operate function
 
-rockBtn.addEventListener('click', () => playRound('Rock', getComputerChoice()));
-paperBtn.addEventListener('click', () => playRound('Paper', getComputerChoice()))
-scissorsBtn.addEventListener('click', () => playRound('Scissors', getComputerChoice()));
+let equals = document.querySelector('.equals');
 
+equals.addEventListener('click', () => {
+    operate();
+})
+
+// function for calculating using all the variables
+
+function operate() {
+
+    num1 = parseFloat(num1)
+    num2 = parseFloat(num2)
+
+    let result = 0;
+
+    if (operator == '+') {
+        result = add(num1, num2);
+    } else if (operator == '-') {
+        result = sub(num1, num2);
+    } else if (operator == '*') {
+        result = mul(num1, num2);
+    } else if (operator == '/') {
+        if (num2 !== 0) {
+            result = div(num1, num2);
+        } else {
+            display.textContent = "Cannot divide by 0";
+            return;
+        }
+
+    };
+
+    // displaying result rounded to four decimal places
+    result = parseFloat(result.toFixed(4));
+
+    display.textContent = result.toString();
+
+    num1 = result.toString();
+    num2 = '';
+    operator = '';
+}
+
+// decimal button 
+
+let decimalButton = document.querySelector('.decimal');
+
+decimalButton.addEventListener('click', () => {
+    updateDisplay('.');
+}
+)
+
+
+// clearing and resetting everthing on the display 
+
+let clearBtn = document.querySelector('.clear');
+
+clearBtn.addEventListener('click', () => {
+    num1 = '';
+    num2 = '';
+    operator = '';
+    display.textContent = '0';
+})
 

@@ -5,13 +5,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stone paper scissors</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div id="btnContainer"></div>
-    <div id="Display">
-        <p id="pDisplay"></p>
-        <p id="cDisplay"></p>
+    <div class="body">
+        <div class="frame">
+
+            <div class="display">0</div>
+
+            <div class="rowOne">
+                <button id="seven" class="num">7</button>
+                <button id="eight" class="num">8</button>
+                <button id="nine" class="num">9</button>
+                <button id="add" class="operation">+</button>
+            </div>
+
+            <div class="rowTwo">
+                <button id="four" class="num">4</button>
+                <button id="five" class="num">5</button>
+                <button id="six" class="num">6</button>
+                <button id="sub" class="operation">-</button>
+
+            </div>
+
+            <div class="rowThree">
+                <button id="one" class="num">1</button>
+                <button id="two" class="num">2</button>
+                <button id="three" class="num">3</button>
+                <button id="mul" class="operation">*</button>
+            </div>
+
+            <div class="rowFour">
+
+                <button id="zero" class="num">0</button>
+                <button class="decimal">.</button>
+                <button id="div" class="operation">/</button>
+            </div>
+
+            <div class="rowFive">
+                <button class="clear">AC</button>
+                <button class="equals">=</button>
+            </div>
+
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
